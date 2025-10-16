@@ -1,0 +1,36 @@
+name: CI
+
+on:
+  push:
+    branches: [ main ]
+  pull_request:
+    branches: [ main ]
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
+    - name: Checkout code
+      uses: actions/checkout@v4
+      with:
+        submodules: true
+
+    - name: Install Rust toolchain
+      run: rustup default stable
+
+    - name: Cache Rust dependencies
+      uses: Swatinem/rust-cache@v2
+      with:
+        prefix-key: "${{ runner.os }}-cargo-${{ hashFiles('**/Cargo.lock') }}"
+
+
+    - name: Build project
+      run: cargo build --verbose --release
+    
+    - name: upload build artifacts
+      uses: actions/upload-artifact@v3
+      with:
+        name: lector
+        path: target/release/lector
+
