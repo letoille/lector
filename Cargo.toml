@@ -18,9 +18,9 @@ serde_json = "1.0"
 scraper = "0.18.1"
 
 [[bin]]
-name = "lactor"
+name = "lector"
 path = "src/bin/web.rs"
 
 [[bin]]
-name = "lactor-cli"
+name = "lector-cli"
 path = "src/bin/cli.rs"
